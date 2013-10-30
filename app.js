@@ -3,12 +3,15 @@
  * Module dependencies.
  */
 
+var mongoose = require('mongoose');
 var express = require('express');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
 var app = express();
+
+mongoose.connect('mongodb://localhost/users');
+require('./models/user');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -25,7 +28,13 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.get('/users', user.list);
+// user resource
+var user = require('./routes/user');
+app.get('/api/users', user.list);
+app.get('/api/users/:id', user.show);
+app.put('/api/users/:id', user.update);
+app.post('/api/users', user.create);
+app.delete('/api/users/:id', user.remove);
 
 http.createServer(app).listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port'));
