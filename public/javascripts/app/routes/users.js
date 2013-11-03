@@ -1,11 +1,13 @@
 define(
-['backbone', 'models/user', 'collections/users', 'views/nav', 'views/home', 'views/users/list', 'views/users/create'],
-function(Backbone, User, Users, NavView, HomeView, ListView, CreateView) {
+['backbone', 'models/user', 'collections/users', 'helpers/alert',
+ 'views/nav', 'views/home', 'views/users/list', 'views/users/create'],
+function(Backbone, User, Users, Alert, NavView, HomeView, ListView, CreateView) {
     return Backbone.Router.extend({
 
         initialize: function() {
             var view = new NavView();
-            view.render()
+            view.render();
+            this.on('route', view.activateLink, view)
         },
 
         routes: {
@@ -34,6 +36,11 @@ function(Backbone, User, Users, NavView, HomeView, ListView, CreateView) {
         create: function() {
             var user = new User()
               , view = new CreateView({ model: user });
+
+            user.on('sync', function() {
+                Alert.success('User was successfully saved');
+                this.navigate('list', { trigger: true })
+            }, this);
 
             view.render();
         }
