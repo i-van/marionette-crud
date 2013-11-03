@@ -42,13 +42,14 @@ schema.path('firstName').validate(notEmpty, 'First name cannot be blank');
 schema.path('lastName').validate(notEmpty, 'Last name cannot be blank');
 schema.path('email').validate(notEmpty, 'Email cannot be blank');
 schema.path('login').validate(notEmpty, 'Login cannot be blank');
-schema.path('hashedPassword').validate(notEmpty, 'Password cannot be blank');
+schema.path('hashedPassword').validate(notEmpty, 'Hashed password cannot be blank');
 
 /**
  * pre-save hooks
  */
 schema.pre('save', function(next) {
     this.updated = Date.now();
+    this.increment();
     next()
 });
 
@@ -74,7 +75,7 @@ schema.methods = {
      * @api public
      */
     makeSalt: function() {
-        return Math.round((Date.now() * Math.random())) + '';
+        return Math.round(Date.now() * Math.random()) + '';
     },
 
     /**
