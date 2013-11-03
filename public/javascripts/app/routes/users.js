@@ -1,6 +1,6 @@
 define(
-['backbone', 'collections/users', 'views/nav', 'views/home', 'views/users/list'],
-function(Backbone, Users, NavView, HomeView, ListView) {
+['backbone', 'models/user', 'collections/users', 'views/nav', 'views/home', 'views/users/list', 'views/users/create'],
+function(Backbone, User, Users, NavView, HomeView, ListView, CreateView) {
     return Backbone.Router.extend({
 
         initialize: function() {
@@ -29,6 +29,13 @@ function(Backbone, Users, NavView, HomeView, ListView) {
                     view.render()
                 }
             })
+        },
+
+        create: function() {
+            var user = new User()
+              , view = new CreateView({ model: user });
+
+            view.render();
         }
     })
 });
