@@ -1,5 +1,6 @@
 
 var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
   , crypto = require('crypto');
 
 /**
@@ -7,7 +8,7 @@ var mongoose = require('mongoose')
  *
  * @type {Schema}
  */
-var schema = new mongoose.Schema({
+var schema = new Schema({
     firstName: String,
     lastName: String,
     email: String,
