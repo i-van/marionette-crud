@@ -20,14 +20,15 @@ function(Backbone, Users, NavView, HomeView, ListView) {
         },
 
         list: function(page) {
-            var users = new Users();
+            var users = new Users()
+              , view = new ListView({ collection: users });
+
             users.fetch({
                 data: { page: page || 1 },
-                success: function(users) {
-                    var view = new ListView({ collection: users });
+                success: function() {
                     view.render()
                 }
-            });
+            })
         }
     })
 });
