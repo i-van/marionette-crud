@@ -3,7 +3,7 @@ define(['backbone', 'models/user'], function(Backbone, User) {
         url: "/api/users",
         model: User,
         parse: function(res) {
-            this.totalCount = res.totalCount;
+            this.totalItems = res.totalItems;
             return res.data
         }
     })

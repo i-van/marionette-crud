@@ -11,7 +11,7 @@ module.exports.list = function(req, res, next) {
         data: function(done) {
             User.find().skip((page - 1) * limit).limit(limit).exec(done)
         },
-        totalCount: function(done) {
+        totalItems: function(done) {
             User.count(done)
         }
     }, function(err, results) {
