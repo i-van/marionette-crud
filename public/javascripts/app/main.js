@@ -1,7 +1,10 @@
 
 require.config({
     hbs : {
-        disableI18n: true
+        disableI18n: true,
+        helperPathCallback: function(name) {
+            return 'helpers/' + name
+        }
     },
     shim: {
         underscore: {
