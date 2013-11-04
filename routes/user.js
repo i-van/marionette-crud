@@ -4,9 +4,19 @@ var mongoose = require('mongoose')
   , async = require('async');
 
 module.exports.list = function(req, res, next) {
-    User.find(function(err, users) {
+    var limit = req.param('limit') || 10
+      , page = req.param('page') || 1;
+
+    async.parallel({
+        data: function(done) {
+            User.find().skip((page - 1) * limit).limit(limit).exec(done)
+        },
+        totalCount: function(done) {
+            User.count(done)
+        }
+    }, function(err, results) {
         if (err) { return next(err) }
-        res.json(users)
+        res.json(results)
     })
 };
 
