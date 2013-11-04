@@ -1,17 +1,23 @@
 <h1>List of users</h1>
 <table class="table table-striped">
     <tr>
-        <th>#</th>
+        <th>id</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Login</th>
+        <th>Email</th>
+        <th>Created</th>
+        <th>Updated</th>
     </tr>
     {{#each this}}
     <tr>
-        <td>1</td>
+        <td>{{_id}}</td>
+        <td>{{login}}</td>
         <td>{{firstName}}</td>
         <td>{{lastName}}</td>
-        <td>{{login}}</td>
+        <td>{{email}}</td>
+        <td>{{dateFormat created}}</td>
+        <td>{{dateFormat updated}}</td>
     </tr>
     {{/each}}
 </table>
