@@ -1,6 +1,5 @@
 define(['backbone', 'underscore', 'hbs!templates/users/create'], function(Backbone, _, template) {
     return Backbone.View.extend({
-        el: '#content',
         template: template,
         events: {
             "submit form": "save"
@@ -11,7 +10,8 @@ define(['backbone', 'underscore', 'hbs!templates/users/create'], function(Backbo
         },
 
         render: function() {
-            this.$el.html(this.template(this.model.toJSON()))
+            this.$el.html(this.template(this.model.toJSON()));
+            return this
         },
 
         renderErrors: function(model, xhr) {

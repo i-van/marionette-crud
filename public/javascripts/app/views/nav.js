@@ -7,11 +7,12 @@ define(['backbone', 'hbs!templates/nav'], function(Backbone, template) {
                 { href: '#', label: 'Home' },
                 { href: '#list', label: 'List of users' },
                 { href: '#create', label: 'Create user' }
-            ]))
+            ]));
+            return this
         },
-        activateLink: function(route) {
+        activateLink: function() {
             var links = this.$('.nav a')
-              , target = this.$('.nav a[href="#' + route + '"]');
+              , target = this.$('.nav a[href="#' + location.hash.replace('#', '') + '"]');
 
             links.parent().removeClass('active');
             target.parent().addClass('active');
