@@ -22,6 +22,10 @@ define(['backbone', 'underscore'], function(Backbone, _) {
               , isFirst = this.currentPage <= 1
               , isLast = this.currentPage >= totalPages;
 
+            if (totalPages <= 1) {
+                return this
+            }
+
             if (from < 1) {
                 from = 1;
                 to = from + 4
@@ -40,7 +44,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
 
             for (var i = from; i <= to; i++) {
                 this.$el.append(this.template({
-                    _class: this.currentPage === i ? 'active': '',
+                    _class: this.currentPage == i ? 'active': '',
                     url: this._url(i),
                     label: i
                 }))
