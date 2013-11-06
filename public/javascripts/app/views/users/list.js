@@ -6,6 +6,7 @@ define(['backbone', 'hbs!templates/users/list', 'views/pagination'], function(Ba
                 itemsPerPage: this.collection.itemsPerPage,
                 currentPage: this.collection.currentPage,
                 totalItems: this.collection.totalItems,
+                className: 'pagination pull-right',
                 url: '#list/:page'
             });
 
