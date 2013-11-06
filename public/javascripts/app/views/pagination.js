@@ -3,6 +3,9 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         tagName: 'ul',
         className: 'pagination',
         template: _.template('<li class="<%= _class %>"><a href="<%= url %>"><%= label %></a></li>'),
+        events: {
+            "click .active, .disabled": "disableLink"
+        },
         initialize: function(options) {
             this.itemsPerPage = options.itemsPerPage;
             this.currentPage = options.currentPage;
@@ -61,6 +64,10 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         _url: function(page) {
             if (!this.url) { throw Error('url is not set') }
             return this.url.replace(':page', page)
+        },
+        disableLink: function() {
+            console.log('clicked');
+            return false
         }
     })
 });
