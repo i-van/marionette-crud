@@ -16,6 +16,9 @@ module.exports.list = function(req, res, next) {
         }
     }, function(err, results) {
         if (err) { return next(err) }
+
+        results.currentPage = page;
+        results.itemsPerPage = limit;
         res.json(results)
     })
 };

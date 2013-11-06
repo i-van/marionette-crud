@@ -3,6 +3,8 @@ define(['backbone', 'models/user'], function(Backbone, User) {
         url: "/api/users",
         model: User,
         parse: function(res) {
+            this.itemsPerPage = res.itemsPerPage;
+            this.currentPage = res.currentPage;
             this.totalItems = res.totalItems;
             return res.data
         }
