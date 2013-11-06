@@ -5,9 +5,9 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView) {
     return Backbone.Router.extend({
 
         initialize: function() {
-            var view = new NavView();
-            view.render();
-            this.on('route', view.activateLink, view);
+            var nav = new NavView();
+            nav.render();
+            this.on('route', nav.activateLink, nav);
 
             this.$content = Backbone.$('#content')
         },
