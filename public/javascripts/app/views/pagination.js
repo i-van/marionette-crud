@@ -66,7 +66,6 @@ define(['backbone', 'underscore'], function(Backbone, _) {
             return this.url.replace(':page', page)
         },
         disableLink: function() {
-            console.log('clicked');
             return false
         }
     })
