@@ -38,11 +38,6 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
             var user = new User()
               , view = new CreateView({ model: user });
 
-            user.on('sync', function() {
-                Alert.success('User was successfully saved');
-                this.navigate('list', { trigger: true })
-            }, this);
-
             this.$content.html(view.render().el)
         },
 
@@ -51,12 +46,7 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
               , view = new EditView({ model: user });
 
             user.once('sync', function() {
-                this.$content.html(view.render().el);
-
-                user.on('sync', function() {
-                    Alert.success('User was successfully updated');
-                    this.navigate('list', { trigger: true })
-                }, this);
+                this.$content.html(view.render().el)
             }, this);
 
             user.fetch()

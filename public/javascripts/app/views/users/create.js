@@ -1,12 +1,10 @@
-define(['backbone', 'underscore', 'hbs!templates/users/create'], function(Backbone, _, template) {
+define(
+['backbone', 'underscore', 'hbs!templates/users/create', 'helpers/alert'],
+function(Backbone, _, template, Alert) {
     return Backbone.View.extend({
         template: template,
         events: {
             "submit form": "save"
-        },
-
-        initialize: function() {
-            this.listenTo(this.model, 'error', this.renderErrors);
         },
 
         render: function() {
@@ -29,16 +27,24 @@ define(['backbone', 'underscore', 'hbs!templates/users/create'], function(Backbo
         },
 
         save: function(event) {
-            var model = this.model
-              , form = this.$(event.target);
+            var form = this.$(event.target)
+              , attributes = {};
 
             _.each(form.serializeArray(), function(item) {
-                model.set(item.name, item.value)
+                attributes[item.name] = item.value
             });
 
-            model.save();
+            this.model.save(attributes, {
+                success: this.navigate,
+                error: _.bind(this.renderErrors, this)
+            });
 
             return false
+        },
+
+        navigate: function() {
+            Alert.success('User was successfully saved');
+            Backbone.history.navigate('list', { trigger: true })
         }
     })
 });
