@@ -38,10 +38,18 @@ schema.virtual('password')
 function notEmpty(value) {
     return !!value
 }
+function uniqueLogin(value, done) {
+    var User = mongoose.model('User');
+
+    User.findOne({ login: value }, function(err, user) {
+        done(!user)
+    })
+}
 schema.path('firstName').validate(notEmpty, 'First name cannot be blank');
 schema.path('lastName').validate(notEmpty, 'Last name cannot be blank');
 schema.path('email').validate(notEmpty, 'Email cannot be blank');
 schema.path('login').validate(notEmpty, 'Login cannot be blank');
+schema.path('login').validate(uniqueLogin, 'Such User has been already registered');
 schema.path('hashedPassword').validate(notEmpty, 'Hashed password cannot be blank');
 
 /**
