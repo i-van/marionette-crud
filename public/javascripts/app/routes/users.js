@@ -1,7 +1,7 @@
 define(
 ['backbone', 'models/user', 'collections/users', 'helpers/alert',
- 'views/nav', 'views/users/list', 'views/users/create'],
-function(Backbone, User, Users, Alert, NavView, ListView, CreateView) {
+ 'views/nav', 'views/users/list', 'views/users/create', 'views/users/edit'],
+function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) {
     return Backbone.Router.extend({
 
         initialize: function() {
@@ -44,6 +44,22 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView) {
             }, this);
 
             this.$content.html(view.render().el)
+        },
+
+        edit: function(id) {
+            var user = new User({ _id: id })
+              , view = new EditView({ model: user });
+
+            user.once('sync', function() {
+                this.$content.html(view.render().el);
+
+                user.on('sync', function() {
+                    Alert.success('User was successfully updated');
+                    this.navigate('list', { trigger: true })
+                }, this);
+            }, this);
+
+            user.fetch()
         },
 
         remove: function(id) {
