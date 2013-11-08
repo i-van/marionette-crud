@@ -1,4 +1,6 @@
-define(['backbone', 'hbs!templates/users/list', 'views/pagination'], function(Backbone, template, PaginationView) {
+define(
+['backbone', 'hbs!templates/users/list', 'views/pagination', 'helpers/invokeWidgets'],
+function(Backbone, template, PaginationView, invokeWidgets) {
     return Backbone.View.extend({
         template: template,
         render: function() {
@@ -12,6 +14,7 @@ define(['backbone', 'hbs!templates/users/list', 'views/pagination'], function(Ba
 
             this.$el.html(this.template(this.collection.toJSON()));
             this.$('.table-pagination').html(pagination.render().el);
+            invokeWidgets(this.$el);
             return this
         }
     })

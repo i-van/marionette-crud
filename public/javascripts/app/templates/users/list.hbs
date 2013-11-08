@@ -22,7 +22,11 @@
         <td>
             <div class="btn-group btn-group-xs">
                 <a href="#edit/{{_id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
-                <a href="#" data-id="{{_id}}" class="btn btn-default remove"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="#remove/{{_id}}"
+                   class="btn btn-default"
+                   data-widget="confirm"
+                   data-title="Confirmation"
+                   data-body="Do you really want to do that?"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
         </td>
     </tr>

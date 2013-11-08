@@ -15,7 +15,9 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView) {
         routes: {
             "": "home",
             "list(/:page)": "list",
-            "create": "create"
+            "create": "create",
+            "edit/:id": "edit",
+            "remove/:id": "remove"
         },
 
         home: function() {
@@ -42,6 +44,17 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView) {
             }, this);
 
             this.$content.html(view.render().el)
+        },
+
+        remove: function(id) {
+            var user = new User({ _id: id });
+
+            user.on('destroy', function() {
+                Alert.success('User was successfully removed');
+                this.navigate('list', { trigger: true })
+            }, this);
+
+            user.destroy()
         }
     })
 });
