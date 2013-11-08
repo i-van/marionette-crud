@@ -28,10 +28,12 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
             var users = new Users()
               , view = new ListView({ collection: users });
 
-            users.fetch({ data: { page: page || 1 } });
-            users.on('sync', function() {
-                this.$content.html(view.render().el)
-            }, this)
+            users.fetch({
+                data: { page: page || 1 },
+                success: _.bind(function() {
+                    this.$content.html(view.render().el)
+                }, this)
+            })
         },
 
         create: function() {
@@ -45,22 +47,22 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
             var user = new User({ _id: id })
               , view = new EditView({ model: user });
 
-            user.once('sync', function() {
-                this.$content.html(view.render().el)
-            }, this);
-
-            user.fetch()
+            user.fetch({
+                success: _.bind(function() {
+                    this.$content.html(view.render().el)
+                }, this)
+            })
         },
 
         remove: function(id) {
             var user = new User({ _id: id });
 
-            user.on('destroy', function() {
-                Alert.success('User was successfully removed');
-                this.navigate('list', { trigger: true })
-            }, this);
-
-            user.destroy()
+            user.destroy({
+                success: _.bind(function() {
+                    Alert.success('User was successfully removed');
+                    this.navigate('list', { trigger: true })
+                }, this)
+            })
         }
     })
 });
