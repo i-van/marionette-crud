@@ -3,10 +3,11 @@
  * Module dependencies.
  */
 
-var mongoose = require('mongoose');
-var express = require('express');
-var http = require('http');
-var path = require('path');
+var mongoose = require('mongoose')
+  , express = require('express')
+  , http = require('http')
+  , path = require('path')
+  , validator = require('express-validator');
 
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(validator());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
