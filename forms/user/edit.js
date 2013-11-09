@@ -1,4 +1,8 @@
 
+var mongoose = require('mongoose')
+  , User = mongoose.model('User')
+  , async = require('async');
+
 module.exports = function(req, res, next) {
     req.validate('firstName', 'First name is required').notEmpty();
     req.validate('lastName', 'Last name is required').notEmpty();
@@ -11,8 +15,13 @@ module.exports = function(req, res, next) {
         req.validate('password', 'Passwords should be matched').equals(req.body.passwordConfirmation);
     }
 
-    var errors = req.validationErrors();
-    if (errors) { return res.json(400, errors) }
+    User.findOne({ login: req.body.login }, function(err, user) {
+        if (err) { return next(err) }
 
-    next()
+        req.validate('login', 'Such User has been already registered').fail(user && user._id != req.body._id);
+        var errors = req.validationErrors();
+        if (errors) { return res.json(400, errors) }
+
+        next()
+    })
 };
