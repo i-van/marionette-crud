@@ -9,6 +9,12 @@ var mongoose = require('mongoose')
   , path = require('path')
   , validator = require('express-validator');
 
+//validator
+validator.Validator.prototype.fail = function(failed) {
+    if (failed) { this.error(this.msg || 'Failed') }
+    return this
+};
+
 var app = express();
 
 mongoose.connect('mongodb://localhost/users');

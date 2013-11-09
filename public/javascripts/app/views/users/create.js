@@ -19,10 +19,10 @@ function(Backbone, _, template, Alert) {
             this.$('.help-block').remove();
             this.$('.has-error').removeClass('has-error');
             _.each(errors, function(error) {
-                var input = $('[name="' + error.path + '"]');
+                var input = $('[name="' + error.param + '"]');
                 input.parents('.form-group').addClass('has-error');
-                Backbone.$('<span>', { "class": "help-block", text: error.type })
-                    .insertAfter(input)
+                Backbone.$('<span>', { "class": "help-block", text: error.msg })
+                    .appendTo(input.parent())
             })
         },
 

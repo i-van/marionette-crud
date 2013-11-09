@@ -30,34 +30,32 @@ module.exports.show = function(req, res, next) {
     })
 };
 
-module.exports.update = function(req, res, next) {
-    async.waterfall([
-        function(done) {
-            User.findById(req.params.id, done)
-        },
-        function(user, done) {
-            user.set(req.body).save(done)
-        }
-    ], function(err, user) {
-        if (err) {
-            return err.name === 'ValidationError'
-                 ? res.json(400, err.errors)
-                 : next(err)
-        }
-        res.json(user)
-    })
-};
+module.exports.update = [
+    require('../forms/user/edit'),
+    function(req, res, next) {
+        async.waterfall([
+            function(done) {
+                User.findById(req.params.id, done)
+            },
+            function(user, done) {
+                user.set(req.body).save(done)
+            }
+        ], function(err, user) {
+            if (err) { return next(err) }
+            res.json(user)
+        })
+    }
+];
 
-module.exports.create = function(req, res, next) {
-    User.create(req.body, function(err, user) {
-        if (err) {
-            return err.name === 'ValidationError'
-                 ? res.json(400, err.errors)
-                 : next(err)
-        }
-        res.json(user)
-    })
-};
+module.exports.create = [
+    require('../forms/user/create'),
+    function(req, res, next) {
+        User.create(req.body, function(err, user) {
+            if (err) { return next(err) }
+            res.json(user)
+        })
+    }
+];
 
 module.exports.remove = function(req, res, next) {
     async.waterfall([
