@@ -1,7 +1,6 @@
 
 var mongoose = require('mongoose')
-  , User = mongoose.model('User')
-  , async = require('async');
+  , User = mongoose.model('User');
 
 module.exports = function(req, res, next) {
     req.validate('firstName', 'First name is required').notEmpty();

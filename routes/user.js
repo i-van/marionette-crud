@@ -47,15 +47,24 @@ module.exports.update = [
     }
 ];
 
-module.exports.create = [
-    require('../forms/user/create'),
-    function(req, res, next) {
-        User.create(req.body, function(err, user) {
-            if (err) { return next(err) }
-            res.json(user)
-        })
-    }
-];
+module.exports.create = function(req, res, next) {
+    var Validation = require('../forms/user/create');
+
+    async.waterfall([
+        function(next) {
+            (new Validation(req.body)).validate(next)
+        },
+        function(errors, next) {
+            if (errors.length) {
+                return res.json(400, errors)
+            }
+            User.create(req.body, next)
+        }
+    ], function(err, user) {
+        if (err) { return next(err) }
+        res.json(user)
+    })
+};
 
 module.exports.remove = function(req, res, next) {
     async.waterfall([
