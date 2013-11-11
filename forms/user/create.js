@@ -1,25 +1,26 @@
 
-var mongoose = require('mongoose')
-  , User = mongoose.model('User')
-  , async = require('async');
+var Validation = require('../../lib/validation')
+  , validators = Validation.validators;
 
 module.exports = function(req, res, next) {
-    req.validate('firstName', 'First name is required').notEmpty();
-    req.validate('lastName', 'Last name is required').notEmpty();
-    req.validate('email', 'Email is required').notEmpty();
-    req.validate('email', 'Email is not correct').isEmail();
-    req.validate('login', 'Login is required').notEmpty();
-    req.validate('password', 'Password is required').notEmpty();
-    req.validate('password', 'Password length should be greater than 6').len(6);
-    req.validate('password', 'Passwords should be matched').equals(req.body.passwordConfirmation);
+    Validation(req.body)
+        .add('firstName', validators.notEmpty, 'First name is required')
+        .add('lastName', validators.notEmpty, 'Last name is required')
+        .add('email', validators.notEmpty, 'Email is required')
+        .add('email', validators.isEmail, 'Email is not correct')
+        .add('login', validators.notEmpty, 'Login is required')
+        .add('login', validators.noRecordExists('User', { login: req.body.login }), 'Such User has been already registered')
+        .add('password', validators.notEmpty, 'Password is required')
+        .add('password', validators.len(6), 'Password length should be greater than 6')
+        .add('password', validators.equalField('passwordConfirmation'), 'Passwords should be matched')
+        .validate(function(err, errors) {
+            if (err) {
+                return next(err)
+            }
+            if (errors.length) {
+                return res.json(400, errors)
+            }
 
-    User.findOne({ login: req.body.login }, function(err, user) {
-        if (err) { return next(err) }
-
-        req.validate('login', 'Such User has been already registered').fail(user);
-        var errors = req.validationErrors();
-        if (errors) { return res.json(400, errors) }
-
-        next()
-    })
+            next()
+        })
 };
