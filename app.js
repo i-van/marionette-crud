@@ -6,14 +6,7 @@
 var mongoose = require('mongoose')
   , express = require('express')
   , http = require('http')
-  , path = require('path')
-  , validator = require('express-validator');
-
-//validator
-validator.Validator.prototype.fail = function(failed) {
-    if (failed) { this.error(this.msg || 'Failed') }
-    return this
-};
+  , path = require('path');
 
 var app = express();
 
@@ -27,7 +20,6 @@ app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
-app.use(validator());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
