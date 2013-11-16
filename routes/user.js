@@ -1,7 +1,9 @@
 
 var mongoose = require('mongoose')
   , User = mongoose.model('User')
-  , async = require('async');
+  , async = require('async')
+  , CreateValidation = require('../forms/user/create')
+  , EditValidation = require('../forms/user/edit');
 
 module.exports.list = function(req, res, next) {
     var limit = req.param('limit') || 10
@@ -30,29 +32,30 @@ module.exports.show = function(req, res, next) {
     })
 };
 
-module.exports.update = [
-    require('../forms/user/edit'),
-    function(req, res, next) {
-        async.waterfall([
-            function(done) {
-                User.findById(req.params.id, done)
-            },
-            function(user, done) {
-                user.set(req.body).save(done)
-            }
-        ], function(err, user) {
-            if (err) { return next(err) }
-            res.json(user)
-        })
-    }
-];
-
-module.exports.create = function(req, res, next) {
-    var Validation = require('../forms/user/create');
-
+module.exports.update = function(req, res, next) {
     async.waterfall([
         function(next) {
-            (new Validation(req.body)).validate(next)
+            (new EditValidation(req.body)).validate(next)
+        },
+        function(errors, next) {
+            if (errors.length) {
+                return res.json(400, errors)
+            }
+            User.findById(req.params.id, next)
+        },
+        function(user, next) {
+            user.set(req.body).save(next)
+        }
+    ], function(err, user) {
+        if (err) { return next(err) }
+        res.json(user)
+    })
+};
+
+module.exports.create = function(req, res, next) {
+    async.waterfall([
+        function(next) {
+            (new CreateValidation(req.body)).validate(next)
         },
         function(errors, next) {
             if (errors.length) {

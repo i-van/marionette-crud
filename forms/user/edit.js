@@ -1,26 +1,28 @@
 
-var mongoose = require('mongoose')
-  , User = mongoose.model('User');
+var Validation = require('../../lib/validation')
+  , validators = Validation.validators
+  , UserCreateValidation = require('./create')
+  , util = require('util');
 
-module.exports = function(req, res, next) {
-    req.validate('firstName', 'First name is required').notEmpty();
-    req.validate('lastName', 'Last name is required').notEmpty();
-    req.validate('email', 'Email is required').notEmpty();
-    req.validate('email', 'Email is not correct').isEmail();
-    req.validate('login', 'Login is required').notEmpty();
+function UserEditValidation() {
+    return UserEditValidation.super_.apply(this, arguments)
+}
 
-    if (req.body.password) {
-        req.validate('password', 'Password length should be greater than 6').len(6);
-        req.validate('password', 'Passwords should be matched').equals(req.body.passwordConfirmation);
+util.inherits(UserEditValidation, UserCreateValidation);
+
+UserEditValidation.prototype._password = function() {
+    if (this.values.password) {
+        UserEditValidation.super_.prototype._password.call(this)
     }
-
-    User.findOne({ login: req.body.login }, function(err, user) {
-        if (err) { return next(err) }
-
-        req.validate('login', 'Such User has been already registered').fail(user && user._id != req.body._id);
-        var errors = req.validationErrors();
-        if (errors) { return res.json(400, errors) }
-
-        next()
-    })
 };
+
+UserEditValidation.prototype._login = function() {
+    this.add('login', validators.notEmpty, 'Login is required');
+    this.add(
+        'login',
+        validators.noRecordExists('User', { login: this.values.login, _id: { $ne: this.values._id } }),
+        'Such User has been already registered'
+    )
+};
+
+module.exports = UserEditValidation;
