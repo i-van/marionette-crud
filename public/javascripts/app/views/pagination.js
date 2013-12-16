@@ -11,7 +11,7 @@ define(['backbone', 'underscore'], function(Backbone, _) {
         },
         render: function() {
             _.each(['currentPage', 'itemsPerPage', 'totalItems'], function(field) {
-                if (!this[field]) { throw Error(field + ' is not set') }
+                if (!(field in this)) { throw Error(field + ' is not set') }
             }, this);
 
             var totalPages = Math.ceil(this.totalItems / this.itemsPerPage)
