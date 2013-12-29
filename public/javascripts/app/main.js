@@ -1,5 +1,6 @@
 
 require.config({
+    baseUrl: '/javascripts/app',
     hbs : {
         disableI18n: true,
         helperPathCallback: function(name) {
