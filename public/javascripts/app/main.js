@@ -2,7 +2,6 @@
 require.config({
     baseUrl: '/javascripts/app',
     hbs : {
-        disableI18n: true,
         helperPathCallback: function(name) {
             return 'helpers/' + name
         }
@@ -24,14 +23,12 @@ require.config({
         }
     },
     paths: {
-        jquery: '../bower_components/jquery/jquery',
-        backbone: '../bower_components/backbone/backbone',
-        underscore: '../bower_components/underscore/underscore',
-        bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
-        hbs: '../bower_components/require-handlebars-plugin/hbs',
-        handlebars: '../bower_components/require-handlebars-plugin/Handlebars',
-        i18nprecompile: '../bower_components/require-handlebars-plugin/hbs/i18nprecompile',
-        json2: '../bower_components/require-handlebars-plugin/hbs/json2'
+        jquery: '../../bower_components/jquery/dist/jquery',
+        backbone: '../../bower_components/backbone/backbone',
+        underscore: '../../bower_components/underscore/underscore',
+        bootstrap: '../../bower_components/bootstrap/dist/js/bootstrap',
+        hbs: '../../bower_components/require-handlebars-plugin/hbs',
+        handlebars: '../../bower_components/require-handlebars-plugin/hbs/handlebars'
     }
 });
 
