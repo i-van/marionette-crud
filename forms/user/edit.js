@@ -1,5 +1,5 @@
 
-var Validation = require('../../lib/validation')
+var Validation = require('validation')
   , validators = Validation.validators
   , UserCreateValidation = require('./create')
   , util = require('util');
