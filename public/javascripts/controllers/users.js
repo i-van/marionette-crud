@@ -1,32 +1,15 @@
-define(
-['backbone', 'models/user', 'collections/users', 'helpers/alert',
- 'views/nav', 'views/users/list', 'views/users/create', 'views/users/edit'],
+define(['backbone', 'models/user', 'collections/users', 'helpers/alert',
+    'views/nav', 'views/users/list', 'views/users/create', 'views/users/edit'],
 function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) {
-    return Backbone.Router.extend({
-
-        initialize: function() {
-            var nav = new NavView();
-            nav.render();
-            this.on('route', nav.activateLink, nav);
-
-            this.$content = Backbone.$('#content')
-        },
-
-        routes: {
-            "": "home",
-            "list(/:page)": "list",
-            "create": "create",
-            "edit/:id": "edit",
-            "remove/:id": "remove"
-        },
-
+    return {
         home: function() {
-            this.$content.html('<h1>Home Page</h1>')
+            console.log('home');
+            //this.$content.html('<h1>Home Page</h1>');
         },
 
         list: function(page) {
             var users = new Users()
-              , view = new ListView({ collection: users });
+                , view = new ListView({ collection: users });
 
             users.fetch({
                 data: { page: page || 1 },
@@ -38,14 +21,14 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
 
         create: function() {
             var user = new User()
-              , view = new CreateView({ model: user });
+                , view = new CreateView({ model: user });
 
             this.$content.html(view.render().el)
         },
 
         edit: function(id) {
             var user = new User({ _id: id })
-              , view = new EditView({ model: user });
+                , view = new EditView({ model: user });
 
             user.fetch({
                 success: _.bind(function() {
@@ -64,5 +47,5 @@ function(Backbone, User, Users, Alert, NavView, ListView, CreateView, EditView) 
                 }, this)
             })
         }
-    })
+    };
 });

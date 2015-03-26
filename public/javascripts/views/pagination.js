@@ -1,4 +1,4 @@
-define(['backbone', 'underscore'], function(Backbone, _) {
+define(['../../bower_components/backbone/backbone', 'underscore'], function(Backbone, _) {
     return Backbone.View.extend({
         tagName: 'ul',
         className: 'pagination',

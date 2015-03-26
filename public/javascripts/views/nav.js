@@ -1,4 +1,4 @@
-define(['backbone', 'hbs!templates/nav'], function(Backbone, template) {
+define(['../../bower_components/backbone/backbone', 'hbs!templates/nav'], function(Backbone, template) {
     return Backbone.View.extend({
         el: '#nav',
         template: template,

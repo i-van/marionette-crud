@@ -1,6 +1,6 @@
 // widgets/confirm - dependency for build
 define(
-['backbone', 'hbs!templates/users/list', 'views/pagination', 'helpers/invokeWidgets', 'widgets/confirm'],
+['../../../bower_components/backbone/backbone', 'hbs!templates/users/list', 'views/pagination', 'helpers/invokeWidgets', 'widgets/confirm'],
 function(Backbone, template, PaginationView, invokeWidgets) {
     return Backbone.View.extend({
         template: template,
