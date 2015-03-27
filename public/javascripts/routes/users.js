@@ -1,16 +1,18 @@
-define(['marionette', 'controllers/users'], function(Marionette, usersController) {
+define(['marionette', 'views/users/home'], function(Marionette, HomeView) {
     return Marionette.AppRouter.extend({
-        controller: usersController,
-        appRoutes: {
-            "": "home",
+        initialize: function(options) {
+            this.app = options.app;
+        },
+        routes: {
+            "": "homeAction",
             "list(/:page)": "list",
             "create": "create",
             "edit/:id": "edit",
             "remove/:id": "remove"
         },
-        onRoute: function() {
-            console.log('onRoute');
-            console.log(arguments);
+
+        homeAction: function() {
+            this.app.rootView.contentRegion.show(new HomeView());
         }
     });
 });

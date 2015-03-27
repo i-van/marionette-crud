@@ -34,12 +34,20 @@ require.config({
     }
 });
 
-require(['marionette', 'backbone', 'routes/users'], function(Marionette, Backbone, Router) {
+require(
+['marionette', 'backbone', 'routes/users', 'views/root', 'views/nav'],
+function(Marionette, Backbone, Router, RootView, NavView) {
     var app = new Marionette.Application();
+    app.rootView = new RootView();
+
+    app.on('before:start', function() {
+        app.rootView.navRegion.show(new NavView());
+    });
 
     app.on('start', function() {
-        new Router();
+        new Router({ app: app });
         Backbone.history.start();
     });
+
     app.start();
 });

@@ -1,21 +1,20 @@
-define(['../../bower_components/backbone/backbone', 'hbs!templates/nav'], function(Backbone, template) {
-    return Backbone.View.extend({
-        el: '#nav',
+define(['marionette', 'hbs!templates/nav'], function(Marionette, template) {
+    return Marionette.ItemView.extend({
         template: template,
-        render: function() {
-            this.$el.html(this.template([
-                { href: '#', route: 'home', label: 'Home' },
-                { href: '#list', route: 'list', label: 'List of users' },
-                { href: '#create', route: 'create', label: 'Create user' }
-            ]));
-            return this
-        },
+        //render: function() {
+        //    this.$el.html(this.template([
+        //        { href: '#', route: 'home', label: 'Home' },
+        //        { href: '#list', route: 'list', label: 'List of users' },
+        //        { href: '#create', route: 'create', label: 'Create user' }
+        //    ]));
+        //    return this;
+        //},
         activateLink: function(route) {
-            var links = this.$('.nav a')
-              , target = this.$('.nav a[data-route="' + route + '"]');
+            var links = this.$('.nav a'),
+                target = this.$('.nav a[data-route="' + route + '"]');
 
             links.parent().removeClass('active');
             target.parent().addClass('active');
         }
-    })
+    });
 });
