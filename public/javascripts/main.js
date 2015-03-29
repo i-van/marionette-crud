@@ -35,14 +35,10 @@ require.config({
 });
 
 require(
-['marionette', 'backbone', 'routes/users', 'views/root', 'views/nav'],
-function(Marionette, Backbone, Router, RootView, NavView) {
+['marionette', 'backbone', 'routes/users', 'views/root'],
+function(Marionette, Backbone, Router, RootView) {
     var app = new Marionette.Application();
     app.rootView = new RootView();
-
-    app.on('before:start', function() {
-        app.rootView.navRegion.show(new NavView());
-    });
 
     app.on('start', function() {
         new Router({ app: app });
