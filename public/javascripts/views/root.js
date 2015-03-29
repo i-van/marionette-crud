@@ -5,7 +5,7 @@ define(['marionette', 'views/nav'], function(Marionette, NavView) {
             navRegion: '#nav',
             contentRegion: '#content'
         },
-        onShow: function() {
+        initialize: function() {
             this.navRegion.show(new NavView());
         }
     });
