@@ -1,14 +1,15 @@
-// widgets/confirm - dependency for build
 define(
-['marionette', 'hbs!templates/users/list', 'helpers/invokeWidgets', 'widgets/confirm'],
-function(Marionette, template, invokeWidgets) {
+['marionette', 'hbs!templates/users/list', 'behaviors/confirm'],
+function(Marionette, template, Confirm) {
     return Marionette.ItemView.extend({
-        template: template
-        //render: function() {
-        //    this.$el.html(this.template(this.collection.toJSON()));
-        //    this.$('.table-pagination').html(pagination.render().el);
-        //    invokeWidgets(this.$el);
-        //    return this
-        //}
-    })
+        template: template,
+        ui: {
+            confirm: ".remove-confirmation"
+        },
+        behaviors: {
+            Confirm: {
+                behaviorClass: Confirm
+            }
+        }
+    });
 });
