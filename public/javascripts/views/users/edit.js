@@ -1,5 +1,5 @@
 define(
-['../../../bower_components/backbone/backbone', 'underscore', 'views/users/create', 'hbs!templates/users/edit', 'helpers/alert'],
+['backbone', 'underscore', 'views/users/create', 'hbs!templates/users/edit', 'helpers/alert'],
 function(Backbone, _, CreateView, template, Alert) {
     return CreateView.extend({
         template: template,
