@@ -1,6 +1,6 @@
 
 var Validation = require('validation')
-  , validators = Validation.validators
+  , validators = require('validation/validators')
   , util = require('util');
 
 function UserCreateValidation() {
@@ -9,7 +9,7 @@ function UserCreateValidation() {
 
 util.inherits(UserCreateValidation, Validation);
 
-UserCreateValidation.prototype.initialize = function() {
+UserCreateValidation.prototype.init = function() {
     this._firstName();
     this._lastName();
     this._email();
@@ -41,7 +41,7 @@ UserCreateValidation.prototype._login = function() {
 
 UserCreateValidation.prototype._password = function() {
     this.add('password', validators.notEmpty, 'Password is required')
-        .add('password', validators.len(6), 'Password length should be greater than 6')
+        .add('password', validators.length(6), 'Password length should be greater than 6')
         .add('password', validators.equalField('passwordConfirmation'), 'Passwords should be matched')
 };
 

@@ -1,6 +1,6 @@
 
 var Validation = require('validation')
-  , validators = Validation.validators
+  , validators = require('validation/validators')
   , UserCreateValidation = require('./create')
   , util = require('util');
 
