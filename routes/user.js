@@ -75,6 +75,9 @@ module.exports.remove = function(req, res, next) {
             User.findById(req.params.id, done)
         },
         function(user, done) {
+            if (!user) {
+                return next(new Error('User not found'));
+            }
             user.remove(done)
         }
     ], function(err) {
