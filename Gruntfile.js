@@ -9,9 +9,9 @@ module.exports = function(grunt) {
             compile: {
                 // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
                 options: {
-                    baseUrl: 'public/javascripts/app',
-                    mainConfigFile: 'public/javascripts/app/main.js',
-                    out: 'public/javascripts/app/main.build.js',
+                    baseUrl: 'public/javascripts',
+                    mainConfigFile: 'public/javascripts/main.js',
+                    out: 'public/javascripts/main.build.js',
                     name: 'main',
 
                     optimize: 'uglify2',
