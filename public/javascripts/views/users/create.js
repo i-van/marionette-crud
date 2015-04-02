@@ -22,7 +22,7 @@ function(Marionette, _, $, template, popup) {
         },
 
         save: function(event) {
-            var form = this.$(event.target),
+            var form = $(event.target),
                 attributes = {};
 
             _.each(form.serializeArray(), function(item) {
