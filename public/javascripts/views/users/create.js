@@ -1,6 +1,6 @@
 define(
-['marionette', 'underscore', 'jquery', 'hbs!templates/users/create', 'helpers/popup'],
-function(Marionette, _, $, template, popup) {
+['marionette', 'backbone', 'underscore', 'jquery', 'hbs!templates/users/create', 'helpers/popup'],
+function(Marionette, Backbone, _, $, template, popup) {
     return Marionette.ItemView.extend({
         template: template,
         events: {

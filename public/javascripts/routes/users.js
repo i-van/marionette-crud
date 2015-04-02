@@ -1,6 +1,6 @@
 define(
-['marionette', 'models/user', 'collections/users', 'views/users/home', 'views/users/list', 'views/users/create', 'views/users/edit'],
-function(Marionette, User, Users, HomeView, ListLayout, CreateView, EditView) {
+['marionette', 'backbone', 'models/user', 'collections/users', 'views/users/home', 'views/users/list', 'views/users/create', 'views/users/edit', 'helpers/popup'],
+function(Marionette, Backbone, User, Users, HomeView, ListLayout, CreateView, EditView, popup) {
     return Marionette.AppRouter.extend({
         initialize: function(options) {
             this.app = options.app;
@@ -10,7 +10,7 @@ function(Marionette, User, Users, HomeView, ListLayout, CreateView, EditView) {
             "list(/:page)": "listAction",
             "create": "createAction",
             "edit/:id": "editAction",
-            "remove/:id": "remove"
+            "remove/:id": "removeAction"
         },
 
         homeAction: function() {
@@ -41,6 +41,19 @@ function(Marionette, User, Users, HomeView, ListLayout, CreateView, EditView) {
             new User({ _id: id }).fetch({
                 success: function(user) {
                     contentRegion.show(new EditView({ model: user }));
+                }
+            });
+        },
+
+        removeAction: function(id) {
+            new User({ _id: id }).destroy({
+                success: function() {
+                    popup.alert('Success', 'User was successfully removed');
+                    Backbone.history.navigate('list', { trigger: true });
+                },
+                error: function() {
+                    popup.alert('Failure', 'Something went wrong');
+                    Backbone.history.navigate('list', { trigger: true });
                 }
             });
         }
