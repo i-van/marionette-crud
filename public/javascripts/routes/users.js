@@ -1,6 +1,6 @@
 define(
-['marionette', 'models/user', 'collections/users', 'views/users/home', 'views/users/list'],
-function(Marionette, User, Users, HomeView, ListLayout) {
+['marionette', 'models/user', 'collections/users', 'views/users/home', 'views/users/list', 'views/users/create'],
+function(Marionette, User, Users, HomeView, ListLayout, CreateView) {
     return Marionette.AppRouter.extend({
         initialize: function(options) {
             this.app = options.app;
@@ -8,7 +8,7 @@ function(Marionette, User, Users, HomeView, ListLayout) {
         routes: {
             "": "homeAction",
             "list(/:page)": "listAction",
-            "create": "create",
+            "create": "createAction",
             "edit/:id": "edit",
             "remove/:id": "remove"
         },
@@ -28,6 +28,11 @@ function(Marionette, User, Users, HomeView, ListLayout) {
                     contentRegion.show(new ListLayout({ collection: users }));
                 }
             });
+        },
+
+        createAction: function() {
+            this.app.rootView.navRegion.currentView.activateLink('create');
+            this.app.rootView.contentRegion.show(new CreateView({ model: new User() }));
         }
     });
 });
