@@ -1,4 +1,4 @@
-define(['handlebars'], function(Handlebars) {
+define(['hbs/handlebars'], function(Handlebars) {
 
     function leadingZero(number) {
         return ('0' + number).slice(-2)
