@@ -1,11 +1,12 @@
 
-var mongoose = require('mongoose')
+var router = require('express').Router()
+  , mongoose = require('mongoose')
   , User = mongoose.model('User')
   , async = require('async')
   , CreateValidation = require('../forms/user/create')
   , EditValidation = require('../forms/user/edit');
 
-module.exports.list = function(req, res, next) {
+router.get('/', function(req, res, next) {
     var limit = req.param('limit') || 10
       , page = req.param('page') || 1;
 
@@ -23,16 +24,16 @@ module.exports.list = function(req, res, next) {
         results.itemsPerPage = limit;
         res.json(results)
     })
-};
+});
 
-module.exports.show = function(req, res, next) {
+router.get('/:id', function(req, res, next) {
     User.findById(req.params.id, function(err, user) {
         if (err) { return next(err) }
         res.json(user)
     })
-};
+});
 
-module.exports.update = function(req, res, next) {
+router.put('/:id', function(req, res, next) {
     async.waterfall([
         function(next) {
             (new EditValidation(req.body)).validate(next)
@@ -50,9 +51,9 @@ module.exports.update = function(req, res, next) {
         if (err) { return next(err) }
         res.json(user)
     })
-};
+});
 
-module.exports.create = function(req, res, next) {
+router.post('/', function(req, res, next) {
     async.waterfall([
         function(next) {
             (new CreateValidation(req.body)).validate(next)
@@ -67,9 +68,9 @@ module.exports.create = function(req, res, next) {
         if (err) { return next(err) }
         res.json(user)
     })
-};
+});
 
-module.exports.remove = function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
     async.waterfall([
         function(done) {
             User.findById(req.params.id, done)
@@ -84,4 +85,6 @@ module.exports.remove = function(req, res, next) {
         if (err) { return next(err) }
         res.json(true)
     })
-};
+});
+
+module.exports = router;
