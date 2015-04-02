@@ -1,5 +1,5 @@
-backbone-crud
+marionette-crud
 =============
 User CRUD
 
-demo - http://backbone-crud.herokuapp.com/
+demo - http://marionette-crud.herokuapp.com/
