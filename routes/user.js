@@ -7,8 +7,8 @@ var router = require('express').Router()
   , EditValidation = require('../forms/user/edit');
 
 router.get('/', function(req, res, next) {
-    var limit = req.param('limit') || 10
-      , page = req.param('page') || 1;
+    var limit = +req.query.limit || 10
+      , page  = +req.query.page || 1;
 
     async.parallel({
         data: function(done) {
